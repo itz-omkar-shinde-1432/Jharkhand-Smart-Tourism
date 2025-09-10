@@ -9,9 +9,9 @@ const Header = () => {
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Destinations", href: "/destinations" },
-    { name: "Culture", href: "/culture" },
-    { name: "Activities", href: "/activities" },
+    { name: "Destinations", href: "#destinations" },
+    { name: "Culture", href: "#culture" },
+    { name: "Activities", href: "#activities" },
     { name: "Green Tokens", href: "/green-tokens" },
   ];
 
@@ -51,7 +51,11 @@ const Header = () => {
                 Virtual Cash
               </Button>
             </Link>
-            <Button>Book Now</Button>
+            <Button>
+              <Link to="/trip-planner" className="text-white">
+                Book Now
+              </Link>
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -90,7 +94,11 @@ const Header = () => {
                     Virtual Cash
                   </Button>
                 </Link>
-                <Button className="w-full">Book Now</Button>
+                <Button className="w-full">
+                  <Link to="/trip-planner" className="text-white w-full">
+                    Book Now
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

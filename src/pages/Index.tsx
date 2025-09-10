@@ -8,7 +8,7 @@ import DestinationCard from "@/components/DestinationCard";
 import { useToast } from "@/hooks/use-toast";
 
 // Import images
-import jharkhandHero from "@/assets/jharkhand-hero.jpg";
+import jharkhandHero from "@/assets/jharkhand-waterfall-hero.jpg";
 import netarhatHill from "@/assets/netarhat-hill-station.jpg";
 import dassamFalls from "@/assets/dassam-falls.jpg";
 import betlaPark from "@/assets/betla-national-park.jpg";
@@ -83,7 +83,7 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/itinerary-planner">
+            <Link to="/trip-planner">
               <Button size="lg" className="gap-2 text-lg px-8 py-3">
                 Plan Your Trip
                 <ArrowRight className="h-5 w-5" />
