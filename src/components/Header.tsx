@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MapPin, Menu, X, Coins } from "lucide-react";
+import { MapPin, Menu, X, Coins, Globe } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
@@ -16,13 +16,13 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <header className="sticky top-0 z-50 w-full glass border-b backdrop-blur-md bg-white/95">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
             <MapPin className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-xl font-bold text-primary">Jharkhand Tourism</h1>
+              <h1 className="text-xl font-bold text-gradient">Jharkhand Tourism</h1>
               <p className="text-xs text-muted-foreground">Smart Portal</p>
             </div>
           </Link>
@@ -33,7 +33,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`text-sm font-medium transition-all duration-300 hover:text-primary hover:scale-105 ${
                   location.pathname === item.href
                     ? "text-primary"
                     : "text-muted-foreground"
@@ -46,12 +46,25 @@ const Header = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/green-tokens">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 btn-enhanced">
                 <Coins className="h-4 w-4" />
                 Virtual Cash
               </Button>
             </Link>
-            <Button>
+            
+            {/* Partner Link */}
+            <a 
+              href="https://wander-lust-tourism-platform.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button variant="ghost" size="sm" className="gap-2 btn-enhanced">
+                <Globe className="h-4 w-4" />
+                Partner
+              </Button>
+            </a>
+
+            <Button className="btn-enhanced btn-glow">
               <Link to="/trip-planner" className="text-white">
                 Book Now
               </Link>
@@ -71,7 +84,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden border-t">
+          <div className="md:hidden border-t animate-scale-in">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
                 <Link
@@ -94,6 +107,19 @@ const Header = () => {
                     Virtual Cash
                   </Button>
                 </Link>
+                
+                <a 
+                  href="https://wander-lust-tourism-platform.vercel.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Button variant="ghost" size="sm" className="w-full gap-2">
+                    <Globe className="h-4 w-4" />
+                    Partner Platform
+                  </Button>
+                </a>
+                
                 <Button className="w-full">
                   <Link to="/trip-planner" className="text-white w-full">
                     Book Now
