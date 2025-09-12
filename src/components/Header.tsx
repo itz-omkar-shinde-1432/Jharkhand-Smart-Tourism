@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MapPin, Menu, X, Coins, Globe } from "lucide-react";
+import { MapPin, Menu, X, Coins, Globe, Languages } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import WalletBalance from "./WalletBalance";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [language, setLanguage] = useState("EN");
   const location = useLocation();
 
   const navigation = [
@@ -44,12 +46,25 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
+            <WalletBalance />
+            
             <Link to="/green-tokens">
               <Button variant="outline" size="sm" className="gap-2 btn-enhanced">
                 <Coins className="h-4 w-4" />
                 Virtual Cash
               </Button>
             </Link>
+            
+            {/* Language Switcher */}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2 btn-enhanced"
+              onClick={() => setLanguage(language === "EN" ? "HI" : "EN")}
+            >
+              <Languages className="h-4 w-4" />
+              {language}
+            </Button>
             
             {/* Partner Link */}
             <a 

@@ -101,7 +101,16 @@ const VirtualCashSystem = () => {
       type: 'redeem',
     };
 
+    // Update balance and localStorage
+    const oldBalance = balance;
     setBalance(newBalance);
+    localStorage.setItem('virtualCashBalance', newBalance.toString());
+    
+    // Dispatch custom event for same-tab updates
+    window.dispatchEvent(new CustomEvent('balanceUpdated', {
+      detail: { newBalance, oldBalance }
+    }));
+    
     setTransactions(prev => [newTransaction, ...prev]);
     setUsedTokens(prev => new Set([...prev, upperCode]));
     setTokenCode("");

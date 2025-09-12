@@ -79,14 +79,34 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-300">
-            © 2025 Government of Jharkhand Tourism. All rights reserved.
-          </p>
-          <div className="flex items-center space-x-4 mt-4 md:mt-0">
-            <span className="text-xs text-gray-400">National Informatics Centre</span>
-            <span className="text-xs text-gray-400">|</span>
-            <span className="text-xs text-gray-400">Digital India Initiative</span>
+        <div className="border-t border-white/20 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                <MapPin className="h-6 w-6 text-secondary" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">Official Tourism Portal</p>
+                <p className="text-xs text-gray-300">Government of Jharkhand</p>
+              </div>
+            </div>
+            
+            <div className="text-center mt-4 md:mt-0">
+              <p className="text-sm text-gray-300 mb-1">
+                Visitors since launch: <span className="font-semibold text-secondary">1,24,567</span>
+              </p>
+              <div className="flex items-center space-x-4">
+                <span className="text-xs text-gray-400">National Informatics Centre</span>
+                <span className="text-xs text-gray-400">|</span>
+                <span className="text-xs text-gray-400">Digital India Initiative</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <p className="text-sm text-gray-300">
+              © 2025 Government of Jharkhand Tourism. All rights reserved.
+            </p>
           </div>
         </div>
       </div>

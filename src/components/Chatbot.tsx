@@ -12,14 +12,17 @@ interface ChatMessage {
 }
 
 const faqData = {
-  "hello": "Hello! Welcome to Jharkhand Tourism. How can I help you today?",
-  "destinations": "Popular destinations in Jharkhand include Netarhat Hill Station, Dassam Falls, Betla National Park, and Ranchi. What would you like to know about them?",
-  "netarhat": "Netarhat is known as the 'Queen of Chotanagpur' and offers stunning sunrise and sunset views. It's perfect for nature lovers and photographers.",
-  "dassam falls": "Dassam Falls is a spectacular 144-feet waterfall surrounded by dense forests. Best visited during monsoon season.",
-  "betla": "Betla National Park is a tiger reserve with diverse wildlife and ancient fort ruins. Great for wildlife enthusiasts and history buffs.",
-  "green tokens": "Our Green Token system rewards eco-friendly activities. Participate in cleanup drives and earn virtual cash! Use codes like CLEAN10, CLEAN20, CLEAN100.",
-  "trip planning": "You can plan your trip using our Trip Planner tool. Select your preferences for accommodation, activities, and duration.",
-  "default": "Thank you for your question! For detailed information, please contact our support team or explore our destination pages."
+  "hello": "Hello! Welcome to Jharkhand Tourism. How can I help you today? 🙏",
+  "destinations": "Popular destinations include Netarhat (Queen of Chotanagpur), Dassam Falls (144-feet waterfall), Betla National Park (tiger reserve), and Ranchi city.",
+  "netarhat": "Best time to visit Netarhat: October to March. Known for stunning sunrise/sunset views from Queen of Chotanagpur plateau. Stay at Forest Rest House or JTDC properties.",
+  "dassam falls": "Dassam Falls is 144-feet high, 34km from Ranchi. Best during monsoon (July-October). Take Ranchi-Taimara road, then 10km trek through Saranda Forest.",
+  "betla": "Betla National Park: Open Oct-May. Safari timings: 6-10 AM & 2-6 PM. Online booking required. See tigers, elephants, leopards. Entry fee: ₹150 Indians, ₹600 foreigners.",
+  "ranchi": "How to reach Ranchi: Fly to Birsa Munda Airport (5km from city). Train: Ranchi Junction connects to Delhi, Kolkata, Mumbai. Road: NH33 from Kolkata, NH75 from Patna.",
+  "green tokens": "Green Token System: Clean tourist spots → Earn Virtual Cash! Test codes: CLEAN10 (+₹10), CLEAN20 (+₹20), CLEAN100 (+₹100). Help keep Jharkhand beautiful! 🌿",
+  "trip planning": "Use our Trip Planner for customized itineraries. Select dates, group size, interests (wildlife/waterfalls/culture), budget. We'll create perfect Jharkhand experience!",
+  "tribal culture": "Experience Jharkhand's 32 tribal communities: Santhali dances, Dokra metalwork, Sohrai paintings. Visit during Sarhul (spring festival) or Karma festivals.",
+  "food": "Try Jharkhand cuisine: Litti Chokha, Dhuska, Rugra (mushroom curry), Bamboo shoot curry, Handia (rice beer). Visit local haats (markets) for authentic flavors.",
+  "default": "I'm here to help with Jharkhand tourism info! Ask about destinations, travel tips, Green Tokens, or trip planning. For complex queries, contact our support team."
 };
 
 const Chatbot = () => {
@@ -27,19 +30,43 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
-      message: "Hello! I'm your Jharkhand Tourism assistant. Ask me about destinations, green tokens, or trip planning!",
+      message: "Hello! I'm your Jharkhand Tourism assistant 🗺️ Ask me about destinations, Green Tokens, trip planning, or travel tips!",
       isUser: false,
       timestamp: new Date()
     }
   ]);
   const [inputMessage, setInputMessage] = useState("");
 
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
+  const faqs = [
+    {
+      question: "Best time to visit Netarhat?",
+      answer: "October to March is ideal for Netarhat. The Queen of Chotanagpur offers stunning sunrise/sunset views and pleasant weather during these months."
+    },
+    {
+      question: "How to reach Ranchi?",
+      answer: "Ranchi is well-connected by air, rail, and road. Birsa Munda Airport has flights from major cities. Regular trains connect to Delhi, Kolkata, and Mumbai."
+    },
+    {
+      question: "Green Tokens earning process?",
+      answer: "Clean tourist spots, dispose waste properly, participate in eco-activities. Use codes CLEAN10, CLEAN20, CLEAN100 to test the system!"
+    },
+    {
+      question: "Tribal culture experiences?",
+      answer: "Experience Jharkhand's 32 tribal communities: Santhali dances, Dokra metalwork, Sohrai paintings. Visit during festivals like Sarhul or Karma."
+    }
+  ];
 
+  const quickActions = [
+    { title: "Plan Trip", action: "/trip-planner", icon: "🗺️" },
+    { title: "Book Hotel", action: "#", icon: "🏨" },
+    { title: "Marketplace", action: "#marketplace", icon: "🛒" },
+    { title: "Virtual Cash", action: "/green-tokens", icon: "💰" }
+  ];
+
+  const sendMessage = (message: string) => {
     const userMessage: ChatMessage = {
       id: Date.now(),
-      message: inputMessage,
+      message: message,
       isUser: true,
       timestamp: new Date()
     };
@@ -47,7 +74,7 @@ const Chatbot = () => {
     setMessages(prev => [...prev, userMessage]);
 
     // Simple FAQ response logic
-    const lowercaseInput = inputMessage.toLowerCase();
+    const lowercaseInput = message.toLowerCase();
     let response = faqData.default;
 
     for (const [key, value] of Object.entries(faqData)) {
@@ -66,7 +93,11 @@ const Chatbot = () => {
       };
       setMessages(prev => [...prev, botMessage]);
     }, 1000);
+  };
 
+  const handleSendMessage = () => {
+    if (!inputMessage.trim()) return;
+    sendMessage(inputMessage);
     setInputMessage("");
   };
 
@@ -96,23 +127,54 @@ const Chatbot = () => {
           </CardHeader>
           <CardContent className="p-0 flex flex-col h-80">
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {messages.map((msg) => (
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {messages.map((message) => (
                 <div
-                  key={msg.id}
-                  className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}
+                  key={message.id}
+                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs p-3 rounded-lg text-sm ${
-                      msg.isUser
+                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                      message.isUser
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted text-muted-foreground'
                     }`}
                   >
-                    {msg.message}
+                    <p className="text-sm">{message.message}</p>
+                    <p className="text-xs opacity-70 mt-1">{message.timestamp.toLocaleTimeString()}</p>
                   </div>
                 </div>
               ))}
+              
+              {/* Quick Actions */}
+              {messages.length === 1 && (
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground font-medium">Quick Actions:</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {quickActions.map((action, index) => (
+                      <button
+                        key={index}
+                        onClick={() => window.location.href = action.action}
+                        className="flex items-center gap-2 p-3 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors text-sm"
+                      >
+                        <span>{action.icon}</span>
+                        <span>{action.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground font-medium mt-4">FAQs:</p>
+                  {faqs.map((faq, index) => (
+                    <button
+                      key={index}
+                      onClick={() => sendMessage(faq.question)}
+                      className="w-full text-left p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors text-sm"
+                    >
+                      {faq.question}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Input Area */}
@@ -121,7 +183,7 @@ const Chatbot = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about destinations..."
+                placeholder="Ask about destinations, travel tips..."
                 className="flex-1"
               />
               <Button

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -5,6 +6,7 @@ import { ArrowRight, Play, MapPin, Users, Mountain, Coins } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import DestinationCarousel from "@/components/DestinationCarousel";
+import DestinationSearch from "@/components/DestinationSearch";
 import Chatbot from "@/components/Chatbot";
 import LocalMarketplace from "@/components/LocalMarketplace";
 import Footer from "@/components/Footer";
@@ -19,6 +21,9 @@ import tribalCulture from "@/assets/tribal-culture.jpg";
 
 const Index = () => {
   const { toast } = useToast();
+  const [scrollY, setScrollY] = useState(0);
+  const [filteredDestinations, setFilteredDestinations] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const destinations = [
     {
@@ -26,7 +31,7 @@ const Index = () => {
       location: "Latehar District",
       description: "Queen of Chotanagpur plateau with stunning sunrise and sunset views",
       image: netarhatHill,
-      category: "Hill Station",
+      category: "hill-station",
       rating: 4.7,
     },
     {
@@ -34,7 +39,7 @@ const Index = () => {
       location: "Ranchi District", 
       description: "Spectacular 144-feet waterfall surrounded by dense forests",
       image: dassamFalls,
-      category: "Waterfall",
+      category: "waterfall",
       rating: 4.5,
     },
     {
@@ -42,10 +47,36 @@ const Index = () => {
       location: "Palamu District",
       description: "Tiger reserve with diverse wildlife and ancient fort ruins", 
       image: betlaPark,
-      category: "Wildlife",
+      category: "wildlife",
       rating: 4.5,
     },
   ];
+
+  useEffect(() => {
+    setFilteredDestinations(destinations);
+    
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleSearch = (query: string) => {
+    const filtered = destinations.filter(dest =>
+      dest.title.toLowerCase().includes(query.toLowerCase()) ||
+      dest.location.toLowerCase().includes(query.toLowerCase()) ||
+      dest.description.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredDestinations(filtered);
+  };
+
+  const handleFilter = (category: string) => {
+    setSelectedCategory(category);
+    if (category === "all") {
+      setFilteredDestinations(destinations);
+    } else {
+      setFilteredDestinations(destinations.filter(dest => dest.category === category));
+    }
+  };
 
   const handleARPreview = (title: string) => {
     toast({
@@ -64,10 +95,11 @@ const Index = () => {
           <img
             src={jharkhandHero}
             alt="Beautiful landscape of Jharkhand with lush forests and tribal heritage"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover parallax"
+            style={{ transform: `translateY(${scrollY * 0.5}px)` }}
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70" />
         </div>
         
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
@@ -76,7 +108,7 @@ const Index = () => {
             Discover Jharkhand
           </Badge>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 fade-in-up">
             Welcome to Smart
             <span className="block text-secondary animate-float">Jharkhand Tourism</span>
           </h1>
@@ -157,7 +189,7 @@ const Index = () => {
               <Mountain className="h-3 w-3 mr-1" />
               Featured Spots
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4 fade-in-up">
               Discover Amazing{" "}
               <span className="text-gradient">Tourist Destinations</span>
             </h2>
@@ -167,8 +199,14 @@ const Index = () => {
             </p>
           </div>
 
+          <DestinationSearch 
+            onSearch={handleSearch}
+            onFilter={handleFilter}
+            selectedCategory={selectedCategory}
+          />
+
           <DestinationCarousel 
-            destinations={destinations} 
+            destinations={filteredDestinations} 
             onViewAR={handleARPreview} 
           />
         </div>
@@ -183,7 +221,7 @@ const Index = () => {
                 <Users className="h-3 w-3 mr-1" />
                 Cultural Heritage
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
                 Rich Tribal <span className="text-gradient">Culture & Traditions</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
