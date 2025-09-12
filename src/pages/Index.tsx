@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import DestinationCarousel from "@/components/DestinationCarousel";
 import Chatbot from "@/components/Chatbot";
+import LocalMarketplace from "@/components/LocalMarketplace";
+import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 
 // Import images
@@ -209,8 +211,14 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Local Marketplace */}
+      <LocalMarketplace />
+
       {/* Chatbot */}
       <Chatbot />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

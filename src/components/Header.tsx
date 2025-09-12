@@ -12,7 +12,6 @@ const Header = () => {
     { name: "Destinations", href: "#destinations" },
     { name: "Culture", href: "#culture" },
     { name: "Activities", href: "#activities" },
-    { name: "Green Tokens", href: "/green-tokens" },
   ];
 
   return (

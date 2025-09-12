@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, Calendar as CalendarIcon, Clock, ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -274,6 +275,8 @@ const TripPlanner = () => {
           </form>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

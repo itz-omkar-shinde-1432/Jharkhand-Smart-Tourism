@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import VirtualCashSystem from "@/components/VirtualCashSystem";
 
 const GreenTokens = () => {
@@ -8,6 +9,7 @@ const GreenTokens = () => {
       <div className="pt-8">
         <VirtualCashSystem />
       </div>
+      <Footer />
     </div>
   );
 };
